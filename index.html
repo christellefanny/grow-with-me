@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Grow With Me</title>
+<meta name="theme-color" content="#332D87" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="Grow With Me" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="apple-touch-icon" href="icon-192.png" />
+<style>
+:root{
+  --bg:#fff7ef; --card:#ffffff; --ink:#22265f; --muted:#5e6288; --accent:#ff5e4d; --accent2:#68d4f6;
+  --warm:#ffd94c; --rose:#ffb5c8; --sky:#dff5ff; --line:#ecdfe8; --shadow:0 12px 34px rgba(36,38,95,.10);
+  --teal:#22b8b0; --indigo:#332d87; --coral:#ff7a66; --peach:#fff0db;
+}
+*{box-sizing:border-box} body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:linear-gradient(180deg,#fff8f0 0%,#ffeede 45%,#f5fbff 100%);color:var(--ink)}
+button,input,select,textarea{font:inherit}
+.app{max-width:760px;margin:0 auto;min-height:100vh;padding-bottom:88px}
+header{padding:24px 18px 12px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand h1{font-size:28px;margin:0;letter-spacing:-.6px;color:var(--indigo)}.brand p{margin:4px 0 0;color:var(--muted);font-size:14px}
+.avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--warm),var(--rose));border:2px solid rgba(51,45,135,.12);display:flex;align-items:center;justify-content:center;gap:1px;font-size:14px;line-height:1;text-align:center;padding:4px;box-shadow:0 8px 18px rgba(51,45,135,.14)}.avatar .fam-emoji,.kid-badge.family .fam-emoji{display:inline-block;transform:translateY(0)}
+.tab{display:none;padding:8px 16px 24px}.tab.active{display:block}
+.hero{background:linear-gradient(135deg,#dff6ff 0%,#fff0d7 48%,#ffd5df 100%);border:1px solid #ead7df;border-radius:24px;padding:20px;box-shadow:var(--shadow);margin-bottom:16px}
+.hero h2{margin:0 0 7px;font-size:22px}.hero p{margin:0;color:#526157;line-height:1.45}
+.controls{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 18px}.control{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:10px 12px}.control label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.control select{width:100%;border:0;background:transparent;color:var(--ink);font-weight:700;outline:0}
+.section-title{display:flex;align-items:center;justify-content:space-between;margin:20px 2px 10px}.section-title h3{margin:0;font-size:18px}.tiny{font-size:12px;color:var(--muted)}
+.card{background:linear-gradient(180deg,#ffffff 0%,#fffdfa 100%);border:1px solid var(--line);border-radius:20px;padding:16px;margin:10px 0;box-shadow:0 8px 22px rgba(51,45,135,.06)}
+.kid-row{display:flex;align-items:flex-start;gap:12px}.kid-badge{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;font-size:25px;flex:0 0 auto;border:1px solid rgba(51,45,135,.08)}.g{background:linear-gradient(135deg,#ffd6e1,#fff0f4)}.l{background:linear-gradient(135deg,#bdeeff,#eef9ff)}.a{background:linear-gradient(135deg,#ffe27b,#fff2c0)}.family{background:linear-gradient(135deg,#69d5f5,#ffd94c);font-size:11px;line-height:1;text-align:center;padding:3px;display:flex;align-items:center;justify-content:center;gap:1px;flex-wrap:wrap}
+.kid-row h4{margin:1px 0 3px;font-size:16px}.meta{font-size:12px;color:var(--muted);margin-bottom:8px}.activity{font-size:15px;line-height:1.5;margin:0 0 12px}.actions{display:flex;gap:8px;flex-wrap:wrap}.btn{border:0;border-radius:12px;padding:9px 12px;font-weight:700;cursor:pointer;background:#eef8ff;color:var(--indigo)}.btn.primary{background:linear-gradient(135deg,var(--accent),var(--coral));color:white;box-shadow:0 8px 18px rgba(255,94,77,.22)}.btn.ghost{background:#fff4e1;color:var(--indigo)}.btn.small{padding:7px 10px;font-size:12px}.btn.full{width:100%;padding:12px}
+.family-card{background:linear-gradient(135deg,#e6fbff 0%,#fff4d9 55%,#ffe0e7 100%)}
+.quote{font-size:13px;color:var(--indigo);background:linear-gradient(135deg,#fff8e7,#f2f9ff);border-radius:12px;padding:10px 12px;margin-top:10px}
+.nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(760px,100%);display:grid;grid-template-columns:repeat(5,1fr);background:rgba(255,255,255,.96);border-top:1px solid var(--line);backdrop-filter:blur(12px);padding:7px 6px 10px;z-index:20}.nav button{border:0;background:none;padding:6px 3px;color:#8d7b89;font-size:11px;font-weight:700}.nav button.active{color:var(--indigo)}.nav .ico{display:block;font-size:21px;margin-bottom:1px}
+.profile{display:flex;align-items:center;gap:14px}.profile .kid-badge{width:58px;height:58px;font-size:30px;border-radius:18px}.profile h3{margin:0 0 4px}.chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.chip{font-size:11px;background:linear-gradient(135deg,#f3fbff,#fff3de);border-radius:999px;padding:6px 8px;color:var(--indigo);border:1px solid rgba(51,45,135,.06)}
+.progress{display:grid;grid-template-columns:86px 1fr;gap:8px 10px;align-items:center;margin-top:12px}.progress span{font-size:12px;color:var(--muted)}.bar{height:8px;background:#f4eef3;border-radius:999px;overflow:hidden}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--teal),var(--accent));border-radius:999px}
+.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:12px}.day{background:linear-gradient(180deg,#fffdf9,#f6fbff);border:1px solid var(--line);border-radius:12px;padding:8px 4px;text-align:center;min-height:70px}.day b{font-size:11px;color:var(--indigo)}.day .dots{margin-top:8px;font-size:15px;line-height:1.2}
+.idea-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.idea-card{background:linear-gradient(180deg,#ffffff,#fff9f1);border:1px solid var(--line);border-radius:16px;padding:13px;cursor:pointer;transition:transform .18s ease, box-shadow .18s ease}.idea-card:hover{transform:translateY(-2px);box-shadow:0 10px 20px rgba(51,45,135,.08)}.idea-card b{display:block;margin-bottom:4px;color:var(--indigo)}.idea-card p{font-size:12px;color:var(--muted);margin:0;line-height:1.4}
+textarea{width:100%;min-height:100px;border:1px solid var(--line);border-radius:14px;padding:12px;background:#fffdf9;resize:vertical;outline:none}.obs-actions{display:flex;gap:8px;margin-top:8px}.notice{font-size:12px;color:var(--muted);margin-top:8px}.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%) translateY(20px);background:var(--indigo);color:white;padding:10px 14px;border-radius:999px;font-size:13px;opacity:0;pointer-events:none;transition:.25s;z-index:50}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.empty{color:var(--muted);font-size:13px}.statline{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #f0e5ea}.statline:last-child{border-bottom:0}.statline b{font-size:14px;color:var(--indigo)}.statline span{font-size:12px;color:var(--muted)}
+@media(max-width:520px){.idea-grid{grid-template-columns:1fr}.controls{grid-template-columns:1fr 1fr}.brand h1{font-size:25px}}
+
+.todo-quick{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:10px}.todo-quick input{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px 12px;background:#fffdf9;color:var(--ink);outline:none}.todo-form{display:grid;grid-template-columns:1fr 1fr;gap:10px}.todo-form .wide{grid-column:1/-1}.todo-form input,.todo-form select{width:100%;border:1px solid var(--line);border-radius:12px;padding:10px 11px;background:#fffdf9;color:var(--ink);outline:none}.todo-list{display:grid;gap:10px}.todo-item{display:flex;gap:10px;align-items:flex-start}.todo-check{width:24px;height:24px;border-radius:50%;border:2px solid var(--accent2);background:white;cursor:pointer;flex:0 0 auto;margin-top:2px}.todo-item.done{opacity:.55}.todo-item.done .todo-title{text-decoration:line-through}.todo-content{flex:1;min-width:0}.todo-title{font-weight:800;color:var(--indigo);line-height:1.35}.todo-meta{font-size:12px;color:var(--muted);margin-top:4px}.todo-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.badge-now{display:inline-block;background:#ffe3dd;color:#a53a2e;border-radius:999px;padding:3px 7px;font-size:10px;font-weight:800;margin-left:5px}.todo-count{display:inline-grid;place-items:center;min-width:18px;height:18px;padding:0 5px;border-radius:999px;background:var(--accent);color:white;font-size:10px;margin-left:3px;vertical-align:top}
+@media(max-width:520px){.todo-form{grid-template-columns:1fr}.todo-form .wide{grid-column:auto}.todo-quick{grid-template-columns:1fr}.nav button{font-size:10px}}
+.install-banner{display:none;align-items:center;gap:10px;background:linear-gradient(135deg,#fff2bf,#ffd6e1);border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin:0 16px 8px;box-shadow:var(--shadow)}.install-banner.show{display:flex}.install-banner .install-copy{flex:1}.install-banner b{display:block;color:var(--indigo);font-size:13px}.install-banner span{font-size:11px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+  <div class="brand"><h1>Grow With Me 🌱</h1><p>Small moments. Big growth.</p></div>
+  <div class="avatar" aria-label="Black family of five with one girl and two boys"><span class="fam-emoji">👨🏿</span><span class="fam-emoji">👩🏿</span><span class="fam-emoji">👧🏿</span><span class="fam-emoji">👦🏿</span><span class="fam-emoji">👶🏿</span></div>
+</header>
+<div id="installBanner" class="install-banner"><div class="install-copy"><b>Put Grow With Me on your Home Screen</b><span>Open it like a normal app — no browser tabs.</span></div><button class="btn small primary" id="installBtn" onclick="installPWA()">Install</button><button class="btn small ghost" onclick="dismissInstall()">Later</button></div>
+
+<section id="today" class="tab active">
+  <div class="hero"><h2>What can we do today?</h2><p>Pick the time you actually have. The app will keep it realistic.</p></div>
+  <div class="controls">
+    <div class="control"><label>Time available</label><select id="timeSelect"><option value="5">5 minutes</option><option value="15" selected>15 minutes</option><option value="30">30 minutes</option><option value="60">1+ hour</option></select></div>
+    <div class="control"><label>Where / mood</label><select id="contextSelect"><option value="home">At home</option><option value="outside">Outside</option><option value="errand">Running errands</option><option value="bedtime">Bedtime</option><option value="low">I'm exhausted 😅</option></select></div>
+  </div>
+  <button class="btn primary full" onclick="regenerateAll()">✨ Give me today's plan</button>
+
+  <div class="section-title"><h3>For each child</h3><span class="tiny">Montessori-inspired</span></div>
+  <div id="kidActivities"></div>
+
+  <div class="section-title"><h3>Together</h3><span class="tiny">One activity, three levels</span></div>
+  <div id="familyActivity"></div>
+
+  <div class="section-title"><h3>Kid requests</h3><span class="tiny">Capture it before you forget</span></div>
+  <div class="card family-card">
+    <b>💬 “Dad, can we…?”</b>
+    <div class="todo-quick">
+      <input id="quickTodoText" placeholder="Example: Build the LEGO castle with Liam" onkeydown="if(event.key==='Enter')quickAddTodo()" />
+      <button class="btn primary" onclick="quickAddTodo()">+ Save for later</button>
+    </div>
+    <div class="notice">Quick saves go to your To‑Dos. You can add a child and reminder there.</div>
+  </div>
+
+  <div class="section-title"><h3>Quick observation</h3><span class="tiny">10 seconds is enough</span></div>
+  <div class="card">
+    <textarea id="observationText" placeholder="What did you notice? Example: Liam kept counting the forks without help."></textarea>
+    <div class="obs-actions"><button class="btn" id="micBtn" onclick="startVoice()">🎤 Speak</button><button class="btn primary" onclick="saveObservation()">Save note</button></div>
+    <div class="notice">Saved only on this device in this MVP.</div>
+  </div>
+</section>
+
+<section id="kids" class="tab">
+  <div class="hero"><h2>Your kids</h2><p>Keep the focus on interests, independence, and growth — not scores.</p></div>
+  <div id="profiles"></div>
+  <div class="section-title"><h3>Recent observations</h3><button class="btn small ghost" onclick="clearObservations()">Clear</button></div>
+  <div id="observationList"></div>
+</section>
+
+<section id="week" class="tab">
+  <div class="hero"><h2>This week</h2><p>Sports and fun days count. The goal is rhythm, not perfection.</p></div>
+  <div class="card">
+    <div class="statline"><b>🏃 Sports / movement</b><span>2× weekly goal</span></div>
+    <div class="statline"><b>🎈 Fun family moments</b><span>2× weekly goal</span></div>
+    <div class="statline"><b>🌱 Tiny learning moments</b><span id="weekCount">0 completed</span></div>
+  </div>
+  <div class="section-title"><h3>Weekly rhythm</h3><span class="tiny">Example plan</span></div>
+  <div class="card"><div class="week-grid">
+    <div class="day"><b>Mon</b><div class="dots">🧠<br>10m</div></div><div class="day"><b>Tue</b><div class="dots">⚽<br>❤️</div></div><div class="day"><b>Wed</b><div class="dots">🛠️<br>15m</div></div><div class="day"><b>Thu</b><div class="dots">🏃<br>❤️</div></div><div class="day"><b>Fri</b><div class="dots">📚<br>10m</div></div><div class="day"><b>Sat</b><div class="dots">🌎<br>🎈</div></div><div class="day"><b>Sun</b><div class="dots">🍳<br>👨‍👩‍👧‍👦</div></div>
+  </div></div>
+  <div class="card family-card"><b>💡 This week's nudge</b><p class="activity" style="margin-top:8px">Don't add another big commitment. Use dinner, errands, laundry, walks, and bedtime as the learning environment.</p></div>
+</section>
+
+<section id="todos" class="tab">
+  <div class="hero"><h2>Kid Requests 💬</h2><p>Catch the little promises while you’re busy, then come back to them when you actually have time.</p></div>
+
+  <div class="card">
+    <div class="todo-form">
+      <div class="wide"><input id="todoText" placeholder="What did they ask you to do?" /></div>
+      <select id="todoKid"><option value="Family">Family / anyone</option><option value="Gabrielle">Gabrielle</option><option value="Liam">Liam</option><option value="Austen">Austen</option></select>
+      <select id="todoWhen" onchange="toggleCustomReminder()"><option value="none">No reminder</option><option value="1h">In 1 hour</option><option value="tonight">Tonight at 7 PM</option><option value="tomorrow">Tomorrow at 6 PM</option><option value="custom">Pick date & time</option></select>
+      <input id="todoCustom" class="wide" type="datetime-local" style="display:none" />
+      <button class="btn primary wide" onclick="addTodo()">+ Add request</button>
+    </div>
+    <div class="notice">Reminders can alert you while this app is open. The request stays saved on this device either way.</div>
+  </div>
+
+  <div class="section-title"><h3>Open requests</h3><span class="tiny" id="todoSummary">0 waiting</span></div>
+  <div id="todoList" class="todo-list"></div>
+
+  <div class="section-title"><h3>Completed</h3><button class="btn small ghost" onclick="clearDoneTodos()">Clear completed</button></div>
+  <div id="todoDoneList" class="todo-list"></div>
+</section>
+
+<section id="ideas" class="tab">
+  <div class="hero"><h2>Idea shelf</h2><p>Only browse when you want to. Today should usually do the thinking for you.</p></div>
+  <div class="idea-grid" id="ideaGrid"></div>
+</section>
+
+<nav class="nav">
+  <button class="active" data-tab="today" onclick="openTab('today',this)"><span class="ico">🏠</span>Today</button>
+  <button data-tab="kids" onclick="openTab('kids',this)"><span class="ico">👧🏾</span>Kids</button>
+  <button data-tab="week" onclick="openTab('week',this)"><span class="ico">📅</span>Week</button>
+  <button data-tab="todos" onclick="openTab('todos',this)"><span class="ico">💬</span>To‑Dos <span id="todoNavCount" class="todo-count" style="display:none">0</span></button>
+  <button data-tab="ideas" onclick="openTab('ideas',this)"><span class="ico">✨</span>Ideas</button>
+</nav>
+<div class="toast" id="toast"></div>
+</div>
+<script>
+const kids=[
+ {id:'gabrielle',name:'Gabrielle',stage:'Elementary',emoji:'👧🏾',cls:'g',chips:['Reading & writing','Math reasoning','Independence','Longer projects']},
+ {id:'liam',name:'Liam',stage:'Primary',emoji:'👦🏾',cls:'l',chips:['Practical life','Early math','Language','Sensorial']},
+ {id:'austen',name:'Austen',stage:'Early Montessori',emoji:'🧒🏾',cls:'a',chips:['Movement','Matching & sorting','Language','Practical life']}
+];
+
+const activities={
+ gabrielle:{
+  home:{5:['Write three words that describe something in the room.','Estimate how many spoons are in the drawer, then count them.'],15:['Help plan one part of dinner and write the ingredients.','Measure a household object in inches and centimeters and compare.'],30:['Pick a recipe and help scale one ingredient up or down.','Write a short “how it works” explanation for a household object.'],60:['Choose a family question to research, then teach everyone one thing you learned.','Plan and help cook one simple dish from start to finish.']},
+  outside:{5:['Find three different leaf shapes and describe how they differ.'],15:['Make a quick nature journal entry with one sketch and three observations.'],30:['Photograph five signs of seasonal change and explain each one.'],60:['Map a short neighborhood walk and record plants, signs, landmarks, or patterns you notice.']},
+  errand:{5:['Estimate the total cost of two items before checking the price.'],15:['Use a $10 mini-budget to compare two choices and explain which is the better value.'],30:['Help build a mini shopping list by category and find the items independently.'],60:['Help compare unit prices and make one budget-conscious choice for the family.']},
+  bedtime:{5:['Tell me one thing you learned today and one thing you still wonder about.'],15:['Read together, then summarize the chapter in your own words.'],30:['Write or dictate a short story inspired by something that happened today.'],60:['Read, discuss, and draw a scene or idea from the book.']},
+  low:{5:['From the couch: bring me something that is symmetrical and explain why.'],15:['Choose any object nearby and give me five clues so I can guess it.'],30:['Build something with LEGO or blocks that can hold a book.'],60:['Choose a quiet project: puzzle, drawing, reading, or building, then tell me about it.']}
+ },
+ liam:{
+  home:{5:['Count the forks needed for dinner and set them out.','Sort clean socks into pairs.'],15:['Match socks, count the pairs, and put them away.','Pour water into cups for the family with as little spilling as possible.'],30:['Help wash and cut a soft fruit with a child-safe tool, then count the pieces.','Sort pantry items by type, size, or color.'],60:['Help prepare a simple snack from beginning to cleanup.']},
+  outside:{5:['Find something smooth, rough, and bumpy.'],15:['Count five birds, cars, flowers, or trees and compare which group is biggest.'],30:['Collect safe natural objects and sort them by size, color, or texture.'],60:['Go on a shape hunt and photograph circles, rectangles, triangles, and squares.']},
+  errand:{5:['Find three items that start with the same letter sound.'],15:['Help find five items from the list and count them into the cart.'],30:['Look for numbers on signs and packages and name the ones you know.'],60:['Help sort groceries by where they belong: fridge, freezer, pantry.']},
+  bedtime:{5:['Name three things you did today in order.'],15:['Read a short book and retell the beginning, middle, and end.'],30:['Make up a story together, taking turns one sentence at a time.'],60:['Choose several books and make a cozy family reading hour.']},
+  low:{5:['Bring me three objects that start with different letter sounds.'],15:['Sort 10 small safe objects by color or size while I watch.'],30:['Do a puzzle or matching game and explain your choices.'],60:['Choose a calm shelf activity and complete it independently.']}
+ },
+ austen:{
+  home:{5:['Carry one napkin to each seat at the table.','Match lids to their containers.'],15:['Sort spoons and forks into two groups.','Transfer dry cereal from one bowl to another with a spoon.'],30:['Help wipe a low table, then put the cloth away.','Match clean socks and carry them to the right room.'],60:['Help make a simple snack: wash, carry, pour, and clean up.']},
+  outside:{5:['Find something red, green, yellow, and brown.'],15:['Collect three safe leaves and sort them big / small.'],30:['Walk and name things you see: tree, car, bird, flower, house.'],60:['Play a slow nature scavenger hunt with colors, textures, and sounds.']},
+  errand:{5:['Find something red and something blue.'],15:['Help place three light items in the cart.'],30:['Name or point to five foods you recognize.'],60:['Help carry light groceries inside and sort a few by pantry or fridge.']},
+  bedtime:{5:['Point to and name five body parts.'],15:['Read a picture book and let Austen point to named objects.'],30:['Sing two songs with motions and repeat favorite words.'],60:['Quiet books, simple puzzles, and a bedtime sorting activity.']},
+  low:{5:['Bring me something soft, something hard, and something small.'],15:['Match a few socks or lids while I sit nearby.'],30:['Stack blocks or cups and knock them down, then rebuild.'],60:['Rotate between books, blocks, and a simple matching activity.']}
+ }
+};
+
+const familyActivities={
+ home:{5:'Family table reset: Gabrielle counts and checks what is missing, Liam sets forks or cups, and Austen places napkins.',15:'Kitchen team: Gabrielle reads or measures, Liam counts and pours, Austen carries or sorts. Use whatever meal you are already making.',30:'Laundry lab: Gabrielle sorts by person or category, Liam matches socks and counts pairs, Austen carries small items and matches easy pairs.',60:'Cook together: Gabrielle helps plan and measure, Liam washes and counts, Austen carries, pours pre-measured ingredients, and cleans small spills.'},
+ outside:{5:'Color sprint: Gabrielle finds unusual shades, Liam counts colors, Austen finds red, yellow, green, and brown.',15:'Nature hunt: Gabrielle records five observations, Liam sorts what he sees into categories, Austen finds colors and textures.',30:'Neighborhood walk: Gabrielle photographs five interesting things, Liam counts signs or trees, Austen names objects and sounds.',60:'Park exploration: let each child choose one thing to investigate at their own level, then everyone shares one discovery.'},
+ errand:{5:'Store challenge: Gabrielle finds the best value, Liam finds the item, Austen spots a color or picture on the package.',15:'Mini shopping team: Gabrielle reads the list, Liam counts items, Austen puts a few light items into the cart.',30:'Budget game: Gabrielle works with prices, Liam counts and sorts, Austen identifies foods, colors, or shapes.',60:'Family errand mission: give each child one real responsibility from list-making through carrying groceries inside.'},
+ bedtime:{5:'Three good things: each child shares or points to something they enjoyed. Keep it short.',15:'Family read-aloud: Gabrielle predicts, Liam retells, Austen points to pictures and names objects.',30:'Story circle: Gabrielle starts the story, Liam adds what happens next, Austen contributes a word, sound, or character.',60:'Cozy reading night with age-appropriate books and one simple conversation about what everyone noticed.'},
+ low:{5:'Couch scavenger hunt: each child brings one object that matches a clue you give.',15:'You sit, they do: Gabrielle solves a riddle, Liam sorts objects, Austen matches colors or shapes.',30:'Independent challenge beside you: Gabrielle builds or reads, Liam puzzles or sorts, Austen stacks or matches.',60:'Low-energy family hour: books, puzzles, LEGO/blocks, and simple shelf work — no elaborate setup.'}
+};
+
+let currentActs={};
+function pick(arr){return arr[Math.floor(Math.random()*arr.length)]}
+function getTime(){return document.getElementById('timeSelect').value}
+function getContext(){return document.getElementById('contextSelect').value}
+function regenerateAll(){kids.forEach(k=>currentActs[k.id]=pick(activities[k.id][getContext()][getTime()]));renderKidActivities();renderFamily();}
+function renderKidActivities(){
+ const el=document.getElementById('kidActivities'); el.innerHTML='';
+ kids.forEach(k=>{
+  const act=currentActs[k.id]||pick(activities[k.id][getContext()][getTime()]); currentActs[k.id]=act;
+  el.innerHTML+=`<div class="card"><div class="kid-row"><div class="kid-badge ${k.cls}">${k.emoji}</div><div style="flex:1"><h4>${k.name}</h4><div class="meta">${k.stage} • ${getTime()} min</div><p class="activity">${act}</p><div class="actions"><button class="btn primary" onclick="completeActivity('${k.id}')">✓ We did it</button><button class="btn" onclick="swapActivity('${k.id}')">🔄 Another</button></div></div></div></div>`;
+ });
+}
+function renderFamily(){const act=familyActivities[getContext()][getTime()];document.getElementById('familyActivity').innerHTML=`<div class="card family-card"><div class="kid-row"><div class="kid-badge family" aria-label="Black family of five with one girl and two boys"><span class="fam-emoji">👨🏿</span><span class="fam-emoji">👩🏿</span><span class="fam-emoji">👧🏿</span><span class="fam-emoji">👦🏿</span><span class="fam-emoji">👶🏿</span></div><div><h4>Family activity</h4><div class="meta">One activity • three levels</div><p class="activity">${act}</p><div class="quote">The goal is not to make home feel like school. It is to turn ordinary family life into learning.</div></div></div></div>`}
+function swapActivity(id){currentActs[id]=pick(activities[id][getContext()][getTime()]);renderKidActivities();}
+function completeActivity(id){const key='gwm_completed';const arr=JSON.parse(localStorage.getItem(key)||'[]');arr.push({id,date:new Date().toISOString(),activity:currentActs[id]});localStorage.setItem(key,JSON.stringify(arr));toast('Nice. Tiny win logged 🌱');renderWeek();}
+function renderProfiles(){
+ const done=JSON.parse(localStorage.getItem('gwm_completed')||'[]');
+ document.getElementById('profiles').innerHTML=kids.map(k=>{
+  const count=done.filter(x=>x.id===k.id).length; const pct=Math.min(100,25+count*8);
+  return `<div class="card"><div class="profile"><div class="kid-badge ${k.cls}">${k.emoji}</div><div><h3>${k.name}</h3><div class="meta">${k.stage}</div><div class="chips">${k.chips.map(c=>`<span class="chip">${c}</span>`).join('')}</div></div></div><div class="progress"><span>Learning</span><div class="bar"><i style="width:${pct}%"></i></div><span>Life skills</span><div class="bar"><i style="width:${Math.min(100,pct+8)}%"></i></div><span>Connection</span><div class="bar"><i style="width:${Math.min(100,pct+15)}%"></i></div><span>Exploring</span><div class="bar"><i style="width:${Math.max(20,pct-5)}%"></i></div></div></div>`
+ }).join('');
+}
+function saveObservation(){const t=document.getElementById('observationText').value.trim(); if(!t){toast('Add a quick note first');return;}const arr=JSON.parse(localStorage.getItem('gwm_notes')||'[]');arr.unshift({text:t,date:new Date().toISOString()});localStorage.setItem('gwm_notes',JSON.stringify(arr));document.getElementById('observationText').value='';toast('Observation saved');renderObservations();}
+function renderObservations(){const arr=JSON.parse(localStorage.getItem('gwm_notes')||'[]');const el=document.getElementById('observationList');if(!arr.length){el.innerHTML='<div class="card empty">No observations yet. One sentence is enough.</div>';return;}el.innerHTML=arr.slice(0,8).map(n=>`<div class="card"><div class="meta">${new Date(n.date).toLocaleDateString()}</div><div class="activity" style="margin:0">${escapeHtml(n.text)}</div></div>`).join('')}
+function clearObservations(){localStorage.removeItem('gwm_notes');renderObservations();toast('Observations cleared')}
+function escapeHtml(s){return s.replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c]))}
+function startVoice(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){toast('Voice dictation is not supported in this browser');return;}const r=new SR();r.lang='en-US';r.interimResults=false;r.onstart=()=>document.getElementById('micBtn').textContent='🎙️ Listening…';r.onend=()=>document.getElementById('micBtn').textContent='🎤 Speak';r.onresult=e=>{const box=document.getElementById('observationText');box.value=(box.value+' '+e.results[0][0].transcript).trim();};r.start();}
+function renderWeek(){const arr=JSON.parse(localStorage.getItem('gwm_completed')||'[]');const since=Date.now()-7*86400000;const count=arr.filter(x=>new Date(x.date).getTime()>since).length;document.getElementById('weekCount').textContent=`${count} completed`;}
+function renderIdeas(){const ideas=[['🍳 Practical Life','Cooking, pouring, cleaning, folding, setting the table'],['🔢 Math Everywhere','Counting, measuring, money, patterns, estimating'],['📚 Language','Reading, storytelling, sounds, vocabulary, writing'],['🌿 Nature','Weather, plants, animals, textures, observation'],['🧺 Independence','Real family jobs children can actually own'],['❤️ Connection','Short conversations, reflection, kindness, helping'],['🎨 Creativity','Drawing, building, music, open-ended making'],['🚗 Errands','Turn stores and car rides into tiny learning moments']];document.getElementById('ideaGrid').innerHTML=ideas.map(i=>`<div class="idea-card" onclick="document.getElementById('contextSelect').value='home';openTab('today',document.querySelector('[data-tab=today]'));regenerateAll();"><b>${i[0]}</b><p>${i[1]}</p></div>`).join('')}
+function openTab(id,btn){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));if(btn)btn.classList.add('active');if(id==='kids'){renderProfiles();renderObservations()}if(id==='week')renderWeek();if(id==='todos')renderTodos();window.scrollTo({top:0,behavior:'smooth'})}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1800)}
+
+function getTodos(){return JSON.parse(localStorage.getItem('gwm_todos')||'[]')}
+function saveTodos(arr){localStorage.setItem('gwm_todos',JSON.stringify(arr));renderTodos();updateTodoNav();}
+function quickAddTodo(){const input=document.getElementById('quickTodoText');const text=input.value.trim();if(!text){toast('Type what they asked you first');return;}const arr=getTodos();arr.unshift({id:Date.now(),text,kid:'Family',created:new Date().toISOString(),remindAt:null,done:false,notified:false});saveTodos(arr);input.value='';toast('Saved for later 💬');}
+function toggleCustomReminder(){document.getElementById('todoCustom').style.display=document.getElementById('todoWhen').value==='custom'?'block':'none';}
+function resolveReminder(){const v=document.getElementById('todoWhen').value;const now=new Date();if(v==='none')return null;if(v==='1h')return new Date(now.getTime()+3600000).toISOString();if(v==='tonight'){const d=new Date(now);d.setHours(19,0,0,0);if(d<=now)d.setDate(d.getDate()+1);return d.toISOString();}if(v==='tomorrow'){const d=new Date(now);d.setDate(d.getDate()+1);d.setHours(18,0,0,0);return d.toISOString();}if(v==='custom'){const val=document.getElementById('todoCustom').value;return val?new Date(val).toISOString():null;}return null;}
+function addTodo(){const text=document.getElementById('todoText').value.trim();if(!text){toast('Add the request first');return;}const remindAt=resolveReminder();if(document.getElementById('todoWhen').value==='custom'&&!remindAt){toast('Pick a reminder time');return;}const arr=getTodos();arr.unshift({id:Date.now(),text,kid:document.getElementById('todoKid').value,created:new Date().toISOString(),remindAt,done:false,notified:false});saveTodos(arr);document.getElementById('todoText').value='';document.getElementById('todoWhen').value='none';document.getElementById('todoCustom').style.display='none';toast('Kid request saved');if(remindAt)requestNotificationPermission();}
+function formatReminder(iso){if(!iso)return 'No reminder';const d=new Date(iso);const now=new Date();const overdue=d<=now;return `${overdue?'Due ':'Remind '}${d.toLocaleDateString([], {month:'short',day:'numeric'})} at ${d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})}`;}
+function todoCard(t){const due=t.remindAt&&new Date(t.remindAt)<=new Date()&&!t.done;return `<div class="card todo-item ${t.done?'done':''}"><button class="todo-check" aria-label="Mark ${t.done?'open':'done'}" onclick="toggleTodo(${t.id})">${t.done?'✓':''}</button><div class="todo-content"><div class="todo-title">${escapeHtml(t.text)}${due?'<span class="badge-now">REMINDER</span>':''}</div><div class="todo-meta">${escapeHtml(t.kid)} • ${formatReminder(t.remindAt)}</div><div class="todo-actions">${!t.done?`<button class="btn small" onclick="snoozeTodo(${t.id},60)">⏰ +1 hour</button><button class="btn small ghost" onclick="deleteTodo(${t.id})">Delete</button>`:`<button class="btn small ghost" onclick="deleteTodo(${t.id})">Delete</button>`}</div></div></div>`;}
+function renderTodos(){const arr=getTodos();const open=arr.filter(t=>!t.done);const done=arr.filter(t=>t.done);document.getElementById('todoSummary').textContent=`${open.length} waiting`;document.getElementById('todoList').innerHTML=open.length?open.map(todoCard).join(''):'<div class="card empty">Nothing waiting. Your brain can clock out. 😄</div>';document.getElementById('todoDoneList').innerHTML=done.length?done.slice(0,10).map(todoCard).join(''):'<div class="card empty">Completed requests will show here.</div>';updateTodoNav();}
+function updateTodoNav(){const count=getTodos().filter(t=>!t.done).length;const badge=document.getElementById('todoNavCount');if(!badge)return;badge.textContent=count;badge.style.display=count?'inline-grid':'none';}
+function toggleTodo(id){const arr=getTodos();const t=arr.find(x=>x.id===id);if(t){t.done=!t.done;t.completed=t.done?new Date().toISOString():null;saveTodos(arr);toast(t.done?'Promise kept ❤️':'Moved back to open');}}
+function deleteTodo(id){saveTodos(getTodos().filter(x=>x.id!==id));toast('Request removed');}
+function snoozeTodo(id,mins){const arr=getTodos();const t=arr.find(x=>x.id===id);if(t){t.remindAt=new Date(Date.now()+mins*60000).toISOString();t.notified=false;saveTodos(arr);requestNotificationPermission();toast('Reminder moved 1 hour');}}
+function clearDoneTodos(){saveTodos(getTodos().filter(t=>!t.done));toast('Completed requests cleared');}
+function requestNotificationPermission(){if('Notification' in window&&Notification.permission==='default')Notification.requestPermission();}
+function checkTodoReminders(){const arr=getTodos();let changed=false;arr.forEach(t=>{if(!t.done&&t.remindAt&&!t.notified&&new Date(t.remindAt)<=new Date()){t.notified=true;changed=true;toast(`${t.kid}: ${t.text}`);if('Notification' in window&&Notification.permission==='granted'){try{new Notification('Grow With Me reminder',{body:`${t.kid}: ${t.text}`});}catch(e){}}}});if(changed){localStorage.setItem('gwm_todos',JSON.stringify(arr));renderTodos();}}
+setInterval(checkTodoReminders,30000);
+
+document.getElementById('timeSelect').addEventListener('change',regenerateAll);document.getElementById('contextSelect').addEventListener('change',regenerateAll);
+regenerateAll();renderProfiles();renderObservations();renderWeek();renderIdeas();renderTodos();updateTodoNav();checkTodoReminders();
+
+let deferredInstallPrompt=null;
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();
+  deferredInstallPrompt=e;
+  if(localStorage.getItem('gwm_install_dismissed')!=='1') document.getElementById('installBanner')?.classList.add('show');
+});
+window.addEventListener('appinstalled',()=>{
+  document.getElementById('installBanner')?.classList.remove('show');
+  deferredInstallPrompt=null;
+  toast('Grow With Me installed 🌱');
+});
+function installPWA(){
+  if(deferredInstallPrompt){
+    deferredInstallPrompt.prompt();
+    deferredInstallPrompt.userChoice.finally(()=>{
+      deferredInstallPrompt=null;
+      document.getElementById('installBanner')?.classList.remove('show');
+    });
+  }else{
+    toast('On iPhone: Share → Add to Home Screen');
+  }
+}
+function dismissInstall(){
+  localStorage.setItem('gwm_install_dismissed','1');
+  document.getElementById('installBanner')?.classList.remove('show');
+}
+if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')){
+  window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{}));
+}
+const isStandalone=window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone===true;
+if(!isStandalone && /iPhone|iPad|iPod/.test(navigator.userAgent) && localStorage.getItem('gwm_install_dismissed')!=='1'){
+  setTimeout(()=>document.getElementById('installBanner')?.classList.add('show'),800);
+}
+</script>
+</body>
+</html>
